@@ -1,19 +1,16 @@
 <resources>
     <string name="app_name">TestMenu</string>
 
-    <string name="title_section1">Menu 1</string>
-    <string name="title_section2">Menu 2</string>
-    <string name="title_section3">Menu 3</string>
+    <string name="title_section1">Feuille de route</string>
+    <string name="title_section2">Supprimer patient</string>
+    <string name="title_section3">Attribution</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
-
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Paramètres</string>
 
 <!-- TODO: Remove or change this placeholder text -->
-    <string name="menu1Text">Texte du menu 1</string>
-    <string name="menu2Text">Texte du menu 2</string>
-    <string name="menu3Text">Texte du menu 3</string>
+    <string name="menu2Text">Suppression TODO</string>
+    <string name="menu3Text">Attribution TODO</string>
 </resources>

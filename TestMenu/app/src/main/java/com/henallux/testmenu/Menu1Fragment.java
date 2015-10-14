@@ -23,7 +23,6 @@ public class Menu1Fragment extends Fragment {
     public static Menu1Fragment newInstance() {
 
         Menu1Fragment fragment = new Menu1Fragment();
-        Log.i("debugTag", "Constructeur MenuFragment is executed");
         return fragment;
     }
 
@@ -34,20 +33,15 @@ public class Menu1Fragment extends Fragment {
         listTest = (ListView)fragmentView.findViewById(R.id.listView);
 
         ArrayList<String> allPerson = new ArrayList<String>();
-        Log.i("debugTag", "Array list creation");
         allPerson.add("Durant");
         allPerson.add("Dupont");
         allPerson.add("Dernivoix");
         allPerson.add("Doumont");
         allPerson.add("Degraux");
         allPerson.add("Leonard");
-        Log.i("debugTag", "Array list fin ajout et debut adapter");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, allPerson);
-        Log.i("debugTag" , "adapter creer");
         listTest.setAdapter(adapter);
-        Log.i("debugTag", "ajout adapter");
 
-        Log.i("debugTag", "onCreateView MenuFragment FIN");
         return fragmentView;
     }
 

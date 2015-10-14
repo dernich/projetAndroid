@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("debugTag" , "MainActivity onCreate is executed");
         setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -46,16 +45,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        Log.i("debugTag" , "onNavigationItemSelected is executed");
         Fragment objFragment = null;
 
         switch(position) {
             case 0 : objFragment = Menu1Fragment.newInstance();
-                Log.i("debugTag" , "switch 1");
                 break;
-            case 1 : objFragment = new Menu2Fragment();
+            case 1 : objFragment = Menu2Fragment.newInstance();
                 break;
-            case 2 : objFragment = new Menu3Fragment();
+            case 2 : objFragment = Menu3Fragment.newInstance();
                 break;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -132,7 +129,6 @@ public class MainActivity extends AppCompatActivity
          */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
-            Log.i("debugTag" , "PlaceHolderFragment construct is executed");
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);

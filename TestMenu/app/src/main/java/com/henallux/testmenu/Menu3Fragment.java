@@ -7,18 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Menu3Fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Menu3Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Menu3Fragment extends Fragment {
 
     public Menu3Fragment() {
         // Required empty public constructor
+    }
+
+    public static Menu3Fragment newInstance() {
+
+        Menu3Fragment fragment = new Menu3Fragment();
+        return fragment;
     }
 
     @Override
