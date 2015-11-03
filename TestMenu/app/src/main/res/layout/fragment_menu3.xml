@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.henallux.testmenu.Menu1Fragment"
+    android:layout_height="match_parent" tools:context="com.henallux.testmenu.Menu3Fragment"
     android:gravity="center_horizontal"
     android:background="#ffffff">
 
@@ -10,10 +10,70 @@
         android:layout_height="wrap_content"
         android:text="@string/menu3Text"
         android:id="@+id/textViewMenu1"
+        android:textSize="40dp"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textNurse"
+        android:id="@+id/textSpinnerNurse"
+        android:textSize="20dp"
+        android:layout_alignBaseline="@+id/spinnerNurse"
+        android:layout_alignBottom="@+id/spinnerNurse"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"/>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerNurse"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textPatient"
+        android:id="@+id/textSpinnerPatient"
+        android:textSize="20dp"
+        android:layout_alignBaseline="@+id/spinnerPatient"
+        android:layout_alignBottom="@+id/spinnerPatient"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="124dp"
-        android:textSize="30dp"/>
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerPatient"
+        android:layout_below="@+id/spinnerNurse"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true" />
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/datePicker"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:layout_below="@+id/spinnerPatient"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Valider"
+        android:id="@+id/buttonValidation"
+        android:drawableLeft="@drawable/ic_action_validate"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:textColor="#fff"
+        android:background="#4ede2a" />
 
 </RelativeLayout>
