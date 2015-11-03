@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Fragment objFragment = null;
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -49,6 +51,12 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Vous êtes bien connecté !", Toast.LENGTH_LONG).show();
         }
         else {
+            objFragment = ErrorConnection.newInstance();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, objFragment)
+                    .commit();
             Toast.makeText(this, "Vous devez être connecté à internet !", Toast.LENGTH_LONG).show();
         }
     }
@@ -64,13 +72,21 @@ public class MainActivity extends AppCompatActivity
         // update the main content by replacing fragments
         Fragment objFragment = null;
 
-        switch(position) {
-            case 0 : objFragment = Menu1Fragment.newInstance();
-                break;
-            case 1 : objFragment = Menu2Fragment.newInstance();
-                break;
-            case 2 : objFragment = Menu3Fragment.newInstance();
-                break;
+        if (isOnline()) {
+            switch (position) {
+                case 0:
+                    objFragment = Menu1Fragment.newInstance();
+                    break;
+                case 1:
+                    objFragment = Menu2Fragment.newInstance();
+                    break;
+                case 2:
+                    objFragment = Menu3Fragment.newInstance();
+                    break;
+            }
+        }
+        else {
+            objFragment = ErrorConnection.newInstance();
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
 

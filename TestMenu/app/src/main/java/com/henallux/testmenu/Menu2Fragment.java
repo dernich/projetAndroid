@@ -1,9 +1,13 @@
 package com.henallux.testmenu;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,10 +69,26 @@ public class Menu2Fragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(),InformationActivity.class);
                 intent.putExtra("infoFragment", "fragment suppression");
-                intent.putExtra("infoPatient",listTest.getItemAtPosition(position).toString());
-                startActivity(intent);
+                intent.putExtra("infoPatient", listTest.getItemAtPosition(position).toString());
+                if (isOnline()) {
+                    startActivity(intent);
+                }
+                else {
+                    Fragment objFragment = ErrorConnection.newInstance();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, objFragment)
+                            .commit();
+                }
             }
         });
         return fragmentView;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

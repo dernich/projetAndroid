@@ -1,7 +1,12 @@
 package com.henallux.testmenu;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -73,10 +78,26 @@ public class InformationActivity extends AppCompatActivity {
                 Uri gmmIntentUri = Uri.parse("google.navigation:q=" + adr + "+Belgium");
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
+                if (isOnline()) {
+                    startActivity(mapIntent);
+                }
+                else {
+                    Fragment objFragment = ErrorConnection.newInstance();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, objFragment)
+                            .commit();
+                }
             }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
