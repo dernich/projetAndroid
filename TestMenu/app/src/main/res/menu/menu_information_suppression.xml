@@ -10,13 +10,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_location"
-        android:title="@string/action_location"
-        android:icon="@drawable/ic_action_location"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/action_suppression"
         android:icon="@drawable/ic_action_delete"
         android:title="@string/action_suppression"

@@ -24,7 +24,7 @@
     <string name="AdresseTexte">Rue Joseph Calozet 15, 5000 Namur</string>
     <string name="dateNaissanceTexte">27/06/1959</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_login">Connection</string>
+    <string name="title_activity_login">nurseAgenda</string>
     <string name="Valider">Valider</string>
     <string name="textNurse">Infirmier(e)</string>
     <string name="textPatient">Patient</string>
@@ -46,5 +46,6 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="noConnection">NO CONNECTION</string>
+    <string name="title_activity_splash_screen">splashScreen</string>
 
 </resources>

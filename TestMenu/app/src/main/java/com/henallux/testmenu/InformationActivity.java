@@ -22,6 +22,7 @@ public class InformationActivity extends AppCompatActivity {
     private String messageFragment;
     private String infoPatient;
     private static String adr;
+    private TextView tel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,14 @@ public class InformationActivity extends AppCompatActivity {
         adr = (String)adresse.getText();
         adr = adr.replaceAll("\\s", "+");
 
+        tel = (TextView)findViewById(R.id.TelephoneId);
+        tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.net.Uri uri = Uri.parse("tel:" + (String)tel.getText());
+                startActivity(new Intent(Intent.ACTION_DIAL, uri));
+            }
+        });
         /*adresse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
