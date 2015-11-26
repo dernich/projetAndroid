@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity
                 case 2:
                     objFragment = Menu3Fragment.newInstance();
                     break;
+                case 3 :
+                    break;
             }
         }
         else {

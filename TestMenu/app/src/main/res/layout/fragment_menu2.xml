@@ -5,15 +5,14 @@
     android:background="#ffffff">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu2Text"
-        android:id="@+id/textViewMenu1"
+        android:id="@+id/listView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="124dp"
-        android:textSize="30dp"/>
+        android:longClickable="false"
+        android:footerDividersEnabled="false" />
 
 </RelativeLayout>

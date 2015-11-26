@@ -1,11 +1,11 @@
 <resources>
-    <!-- Base application theme. -->
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="homeAsUpIndicator">@drawable/ic_drawer</item>
     </style>
+
     <style name="InfoTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="homeAsUpIndicator">@drawable/ic_menu_back</item>
+        <!-- <item name="homeAsUpIndicator">@drawable/ic_menu_back</item> -->
     </style>
+
 </resources>

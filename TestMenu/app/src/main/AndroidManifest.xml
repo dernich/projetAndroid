@@ -33,7 +33,6 @@
         <activity
             android:name=".InformationActivity"
             android:label="@string/title_activity_information"
-            android:parentActivityName=".MainActivity"
             android:theme="@style/InfoTheme" >
         </activity>
 

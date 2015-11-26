@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.henallux.testmenu.Model.Patient;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,25 +44,21 @@ public class Menu1Fragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_menu1, container, false);
         listTest = (ListView)fragmentView.findViewById(R.id.listView);
 
-        ArrayList<String> allPerson = new ArrayList<String>();
-        allPerson.add("Durant");
-        allPerson.add("Dernivoix");
-        allPerson.add("Doumont");
-        allPerson.add("Degraux");
-        allPerson.add("Leonard");
-        allPerson.add("Leonard");
-        allPerson.add("Muller");
-        allPerson.add("Lambert");
-        allPerson.add("Lejeune");
-        allPerson.add("Hayward");
 
-        Collections.sort(allPerson, new Comparator<String>() {
+        ArrayList<Patient> allPatient = new ArrayList<Patient>();
+        allPatient.add(new Patient("Dernivoix", "Antoine", "09/11/1993", "0494089554", "Place de la gare", 7, "6840", "Longlier"));
+        allPatient.add(new Patient("Doumont", "Kévin", "02/01/1995", "0497403226", "Longtry", 119, "5070", "Leroux"));
+        allPatient.add(new Patient("Hayward", "Juliette", "10/01/1992", "0494465836", "Avenue Roi baudouin", 15, "6600", "Bastogne"));
+        allPatient.add(new Patient("Leonard", "Sébastien", "15/06/1995", "0475761904", "route d'onhaye", 17, "5524", "Dinant"));
+        allPatient.add(new Patient("Degraux", "Maxence", "16/06/1995", "0498139358", "rue du monument", 108, "5620", "Rosée"));
+
+        Collections.sort(allPatient, new Comparator<Patient>() {
             @Override
-            public int compare(String s1, String s2) {
-                return s1.compareToIgnoreCase(s2);
+            public int compare(Patient s1, Patient s2) {
+                return s1.getNom().compareToIgnoreCase(s2.getNom());
             }
         });
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, allPerson);
+        ArrayAdapter<Patient> adapter = new ArrayAdapter<Patient>(getActivity(), android.R.layout.simple_list_item_1, allPatient);
         listTest.setAdapter(adapter);
 
         listTest.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,7 +66,8 @@ public class Menu1Fragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), InformationActivity.class);
                 intent.putExtra("infoFragment", "fragment listing");
-                intent.putExtra("infoPatient", listTest.getItemAtPosition(position).toString());
+                Patient patientSelected = (Patient)listTest.getItemAtPosition(position);
+                intent.putExtra("infoPatient", patientSelected);
                 if (isOnline()) {
                     startActivity(intent);
                 }

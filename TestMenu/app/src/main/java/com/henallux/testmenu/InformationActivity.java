@@ -16,12 +16,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.henallux.testmenu.Model.Patient;
 
 public class InformationActivity extends AppCompatActivity {
 
     private String messageFragment;
-    private String infoPatient;
-    private static String adr;
+    private Patient patient;
+    private String adr;
     private TextView tel;
 
     @Override
@@ -31,8 +32,11 @@ public class InformationActivity extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         messageFragment = bundle.getString("infoFragment");
-        infoPatient = bundle.getString("infoPatient");
-        ((TextView)findViewById(R.id.NomPrenomId)).setText(infoPatient);
+        patient = (Patient)bundle.getSerializable("infoPatient");
+        ((TextView)findViewById(R.id.NomPrenomId)).setText(patient.getNom() + " " + patient.getPrenom());
+        ((TextView)findViewById(R.id.AdresseId)).setText(patient.getRue() + " " + patient.getNumeroMaison() + ", "  + patient.getCodePostal() + " " + patient.getLocalite());
+        ((TextView)findViewById(R.id.TelephoneId)).setText(patient.getNumeroTel());
+        ((TextView)findViewById(R.id.DateNaissanceId)).setText(patient.getDateNaissance());
         TextView adresse = (TextView)findViewById(R.id.AdresseId);
         adr = (String)adresse.getText();
         adr = adr.replaceAll("\\s", "+");
