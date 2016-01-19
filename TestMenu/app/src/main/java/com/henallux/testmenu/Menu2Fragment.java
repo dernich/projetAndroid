@@ -1,6 +1,7 @@
 package com.henallux.testmenu;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -8,6 +9,7 @@ import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.henallux.testmenu.DataAccess.AllData;
+import com.henallux.testmenu.Model.Care;
 import com.henallux.testmenu.Model.Patient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +40,9 @@ import java.util.Comparator;
 public class Menu2Fragment extends Fragment {
 
     private ListView listTest;
+    private ArrayList<Patient> listPatients;
+    Gson gson;
+    ProgressDialog progressDialog;
 
     public Menu2Fragment() {
         // Required empty public constructor
@@ -41,24 +59,36 @@ public class Menu2Fragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_menu1, container, false);
         listTest = (ListView)fragmentView.findViewById(R.id.listView);
 
-        ArrayList<Patient> allPatient = new ArrayList<Patient>();
-        allPatient.add(new Patient("Dernivoix", "Antoine", "09/11/1993", "0494089554", "Place de la gare", 7, "6840", "Longlier"));
-        allPatient.add(new Patient("Doumont", "Kévin", "02/01/1995", "0497403226", "Longtry", 119, "5070", "Leroux"));
-        allPatient.add(new Patient("Hayward", "Juliette", "10/01/1992", "0494465836", "Avenue Roi baudouin", 15, "6600", "Bastogne"));
-        allPatient.add(new Patient("Leonard", "Sébastien", "15/06/1995", "0475761904", "route d'onhaye", 17, "5524", "Dinant"));
-        allPatient.add(new Patient("Degraux", "Maxence", "16/06/1995", "0498139358", "rue du monument", 108, "5620", "Rosée"));
-        allPatient.add(new Patient("Lambert", "Christine", "28/08/1968", "0494561231", "Place de la gare", 7, "6840", "Longlier"));
-        allPatient.add(new Patient("Lejeune", "Julien", "15/03/1993", "0484351565", "rue de la maladrie", 19, "6840", "Longlier"));
-        allPatient.add(new Patient("Zabata", "Zakaria", "16/06/1996", "0498115113", "rue tout vent", 15, "6041", "Gosselies"));
+        getActivity().setTitle(R.string.title_section2);
 
-        Collections.sort(allPatient, new Comparator<Patient>() {
+        gson = new Gson();
+        listPatients = new ArrayList<>();
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle(R.string.loading);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        RequestQueue requestQueue =  Volley.newRequestQueue(this.getActivity().getApplicationContext());
+        StringRequest request = new StringRequest(Request.Method.GET, "http://nurseapi.azurewebsites.net/api/patients", new Response.Listener<String>() {
             @Override
-            public int compare(Patient s1, Patient s2) {
-                return s1.getNom().compareToIgnoreCase(s2.getNom());
+            public void onResponse(String response) {
+                transformationResponse(response);
+                progressDialog.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("onErrorResponse()", error.toString());
+                progressDialog.dismiss();
             }
         });
-        ArrayAdapter<Patient> adapter = new ArrayAdapter<Patient>(getActivity(), android.R.layout.simple_list_item_1, allPatient);
-        listTest.setAdapter(adapter);
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(request);
 
         listTest.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -87,5 +117,47 @@ public class Menu2Fragment extends Fragment {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    private void transformationResponse(String response) {
+        if(response == null || response.length() == 0) {
+
+            return;
+        }
+
+        try {
+
+            JSONArray responseJSON = new JSONArray(response);
+            for (int i = 0; i < responseJSON.length(); i++) {
+                Patient p = new Patient();
+                p.setId(responseJSON.getJSONObject(i).getInt("idpatient"));
+                p.setNom(responseJSON.getJSONObject(i).getString("nom"));
+                p.setPrenom(responseJSON.getJSONObject(i).getString("prenom"));
+                p.setDateNaissance(responseJSON.getJSONObject(i).getString("dateNaissance"));
+                p.setRue(responseJSON.getJSONObject(i).getString("rue"));
+                p.setNumeroMaison(responseJSON.getJSONObject(i).getString("numeroMaison"));
+                p.setLocalite(responseJSON.getJSONObject(i).getString("localite"));
+                p.setCodePostal(responseJSON.getJSONObject(i).getString("codePostal"));
+                p.setNumeroTel(responseJSON.getJSONObject(i).getString("numTelephone"));
+                p.setDateDebutSoin(responseJSON.getJSONObject(i).getString("dateDebutSoin"));
+                p.setDateFinSoin(responseJSON.getJSONObject(i).getString("dateFinSoin"));
+                listPatients.add(p);
+            }
+
+            if(!listPatients.isEmpty()) {
+                Collections.sort(listPatients, new Comparator<Patient>() {
+                    @Override
+                    public int compare(Patient s1, Patient s2) {
+                        return s1.getNom().compareToIgnoreCase(s2.getNom());
+                    }
+                });
+                ArrayAdapter<Patient> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, listPatients);
+                listTest.setAdapter(adapter);
+                progressDialog.dismiss();
+            }
+
+        } catch (JSONException e) {
+
+        }
     }
 }

@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.henallux.testmenu.ErrorConnection">
 
@@ -8,7 +8,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/noConnection"
         android:id="@+id/noConnection"
-        android:layout_gravity="center" />
+        android:layout_above="@+id/imageNoConnection"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="186dp"
@@ -16,6 +17,7 @@
         android:id="@+id/imageNoConnection"
         android:src="@drawable/ic_no_connection"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="50dp" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
-</FrameLayout>
+</RelativeLayout>

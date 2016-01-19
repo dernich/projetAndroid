@@ -1,22 +1,38 @@
 package com.henallux.testmenu.Model;
 
-public class Nurse {
+import java.io.Serializable;
 
+public class Nurse implements Serializable{
+
+    private Integer id;
     private String nom;
     private String prenom;
     private String numeroTel;
     private String email;
-    private Boolean typeChef;
+    private String typeChef;
+    private String login;
+    private String password;
 
-    public Nurse(String nom, String prenom, String numeroTel, String email, Boolean typeChef) {
+    public Nurse(Integer id, String nom, String prenom, String numeroTel, String email, String typeChef, String login, String password) {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.numeroTel = numeroTel;
         this.email = email;
         this.typeChef = typeChef;
+        this.login = login;
+        this.password = password;
     }
 
     public Nurse() { }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;
@@ -50,11 +66,19 @@ public class Nurse {
         this.email = email;
     }
 
-    public Boolean getTypeChef() {
+    public String getTypeChef() {
         return typeChef;
     }
 
-    public void setTypeChef(Boolean typeChef) {
+    public void setTypeChef(String typeChef) {
         this.typeChef = typeChef;
     }
+
+    public String getLogin() { return login; }
+
+    public void setLogin(String login) { this.login = login; }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
 }

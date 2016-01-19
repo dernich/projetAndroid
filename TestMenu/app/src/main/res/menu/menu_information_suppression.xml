@@ -4,12 +4,6 @@
     tools:context="com.henallux.testmenu.InformationActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_suppression"
         android:icon="@drawable/ic_action_delete"
         android:title="@string/action_suppression"

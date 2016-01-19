@@ -2,6 +2,7 @@ package com.henallux.testmenu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +19,20 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.henallux.testmenu.Model.Nurse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -30,12 +43,14 @@ public class MainActivity extends AppCompatActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private Boolean clickDeconnexion = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        clickDeconnexion = false;
         Fragment objFragment = null;
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -48,7 +63,7 @@ public class MainActivity extends AppCompatActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         if(isOnline()) {
-            Toast.makeText(this, "Vous êtes bien connecté !", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.toastConnection, Toast.LENGTH_LONG).show();
         }
         else {
             objFragment = ErrorConnection.newInstance();
@@ -57,7 +72,7 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, objFragment)
                     .commit();
-            Toast.makeText(this, "Vous devez être connecté à internet !", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.toastNoConnection, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -71,47 +86,87 @@ public class MainActivity extends AppCompatActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         Fragment objFragment = null;
+        ActionBar actionBar = getSupportActionBar();
 
         if (isOnline()) {
-            switch (position) {
-                case 0:
-                    objFragment = Menu1Fragment.newInstance();
-                    break;
-                case 1:
-                    objFragment = Menu2Fragment.newInstance();
-                    break;
-                case 2:
-                    objFragment = Menu3Fragment.newInstance();
-                    break;
-                case 3 :
-                    break;
+            String chef = MyApplication.getIdInfirmiere().getTypeChef();
+            if(chef.equals("true")) {
+                switch (position) {
+                    case 0:
+                        objFragment = Menu1Fragment.newInstance();
+                        actionBar.setTitle(R.string.title_section1);
+                        break;
+                    case 1:
+                        objFragment = Menu2Fragment.newInstance();
+                        actionBar.setTitle(R.string.title_section2);
+                        break;
+                    case 2:
+                        objFragment = Menu3Fragment.newInstance();
+                        actionBar.setTitle(R.string.title_section3);
+                        break;
+                    case 3:
+                        MyApplication.setIdInfirmiere(null);
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        clickDeconnexion = true;
+                        finish();
+                        break;
+                }
+            }
+            else {
+                switch (position) {
+                    case 0:
+                        objFragment = Menu1Fragment.newInstance();
+                        actionBar.setTitle(R.string.title_section1);
+                        break;
+                    case 1:
+                        MyApplication.setIdInfirmiere(null);
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        clickDeconnexion = true;
+                        finish();
+                        break;
+                }
             }
         }
         else {
             objFragment = ErrorConnection.newInstance();
         }
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        if(!clickDeconnexion) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
 
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, objFragment)
-                .commit();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, objFragment)
+                    .commit();
+        }
         //Log.i("debugTag", "transaction is executed");
     }
 
     public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-            case 4:
-                mTitle = getString(R.string.title_section4);
-                break;
+        String chef = MyApplication.getIdInfirmiere().getTypeChef();
+        if(chef.equals("true")) {
+            switch (number) {
+                case 1:
+                    mTitle = getString(R.string.title_section1);
+                    break;
+                case 2:
+                    mTitle = getString(R.string.title_section2);
+                    break;
+                case 3:
+                    mTitle = getString(R.string.title_section3);
+                    break;
+                case 4:
+                    mTitle = getString(R.string.title_section4);
+                    break;
+            }
+        }
+        else {
+            switch (number) {
+                case 1:
+                    mTitle = getString(R.string.title_section1);
+                    break;
+                case 2:
+                    mTitle = getString(R.string.title_section4);
+                    break;
+            }
         }
     }
 
@@ -119,7 +174,6 @@ public class MainActivity extends AppCompatActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
     }
 
 
@@ -143,13 +197,10 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -184,11 +235,11 @@ public class MainActivity extends AppCompatActivity
         }
 
         @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
+        public void onAttach(Context context) {
+            super.onAttach(context);
+            Activity activity = (Activity)context;
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
-
 }

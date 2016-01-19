@@ -13,23 +13,21 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/NomPrenomId"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
         android:textAlignment="center"
-        android:textIsSelectable="false"
-        android:textSize="35dp"
-        android:textStyle="bold" />
+        android:layout_marginTop="40dp"
+        android:textStyle="bold"
+        android:textSize="35dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/DateNaissanceId"
-        android:layout_below="@+id/NomPrenomId"
+        android:layout_above="@+id/AdresseId"
         android:layout_alignLeft="@+id/TelephoneId"
         android:layout_alignStart="@+id/TelephoneId"
-        android:layout_marginTop="30dp" />
+        android:layout_marginBottom="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,28 +36,18 @@
         android:id="@+id/AdresseId"
         android:textAlignment="center"
         android:width="250dp"
-        android:layout_below="@+id/DateNaissanceId"
+        android:layout_above="@+id/TelephoneId"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/LocaliteId"
-        android:textAlignment="center"
-        android:width="250dp"
-        android:layout_below="@+id/AdresseId"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/TelephoneId"
-        android:layout_below="@+id/LocaliteId"
+        android:textAlignment="center"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:textAlignment="center" />
+        android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>

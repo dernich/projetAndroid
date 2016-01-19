@@ -32,7 +32,7 @@
     <string name="prompt_password">Mot De Passe</string>
     <string name="action_sign_in">Connectez-vous ou créer un compte</string>
     <string name="action_sign_in_short">Connectez-vous</string>
-    <string name="error_invalid_login">login invalide</string>
+    <string name="error_invalid_login">Login invalide</string>
     <string name="error_invalid_password">Mot De Passe invalide</string>
     <string name="error_incorrect_password">Mot De Passe incorrect</string>
     <string name="error_field_required">Champ Obligatoire</string>

@@ -5,21 +5,25 @@ import java.util.Date;
 
 public class Patient implements Serializable {
 
+    private Integer id;
     private String nom;
     private String prenom;
     private String dateNaissance;
     private String numeroTel;
     private String email;
     private String rue;
-    private int numeroMaison;
+    private String numeroMaison;
     private String codePostal;
     private String localite;
+    private String dateDebutSoin;
+    private String dateFinSoin;
 
     public Patient() {
 
     }
 
-    public Patient(String nom, String prenom, String dateNaissance, String numeroTel, String rue, int numeroMaison, String codePostal, String localite) {
+    public Patient(Integer id, String nom, String prenom, String dateNaissance, String numeroTel, String rue, String numeroMaison, String codePostal, String localite, String dateDebutSoin, String dateFinSoin) {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
@@ -28,6 +32,16 @@ public class Patient implements Serializable {
         this.numeroMaison = numeroMaison;
         this.codePostal = codePostal;
         this.localite = localite;
+        this.dateDebutSoin = dateDebutSoin;
+        this.dateFinSoin = dateFinSoin;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -78,11 +92,11 @@ public class Patient implements Serializable {
         this.rue = rue;
     }
 
-    public int getNumeroMaison() {
+    public String getNumeroMaison() {
         return numeroMaison;
     }
 
-    public void setNumeroMaison(int numeroMaison) {
+    public void setNumeroMaison(String numeroMaison) {
         this.numeroMaison = numeroMaison;
     }
 
@@ -100,6 +114,22 @@ public class Patient implements Serializable {
 
     public void setLocalite(String localite) {
         this.localite = localite;
+    }
+
+    public String getDateDebutSoin() {
+        return dateDebutSoin;
+    }
+
+    public void setDateDebutSoin(String dateDebutSoin) {
+        this.dateDebutSoin = dateDebutSoin;
+    }
+
+    public String getDateFinSoin() {
+        return dateFinSoin;
+    }
+
+    public void setDateFinSoin(String dateFinSoin) {
+        this.dateFinSoin = dateFinSoin;
     }
 
     public String toString() {

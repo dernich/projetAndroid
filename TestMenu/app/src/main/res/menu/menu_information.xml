@@ -4,15 +4,16 @@
     tools:context="com.henallux.testmenu.InformationActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_location"
         android:title="@string/action_location"
         android:icon="@drawable/ic_action_location"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_call"
+        android:title="@string/action_call"
+        android:icon="@drawable/ic_action_call"
         android:orderInCategory="100"
         app:showAsAction="always" />
 </menu>
