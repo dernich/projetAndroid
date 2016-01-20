@@ -74,7 +74,7 @@ public class Menu1Fragment extends Fragment {
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle(R.string.loading);
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.show();
 
         RequestQueue requestQueue =  Volley.newRequestQueue(this.getActivity().getApplicationContext());
@@ -143,19 +143,20 @@ public class Menu1Fragment extends Fragment {
                 p.setCodePostal(responseJSON.getJSONObject(i).getString("codePostal"));
                 p.setNumeroTel(responseJSON.getJSONObject(i).getString("numTelephone"));
                 JSONArray tabSoins = new JSONArray(response).getJSONObject(i).getJSONArray("soin");
-                //Log.i("debugTag", "soin");
+                //Log.i("debugTag", tabSoins.toString());
+                //Log.i("debugTag", "nom patient : " + p.getNom());
                 for (int j = 0; j < tabSoins.length(); j++) {
                     Care c = new Care();
                     Date dateDay = new Date();
-                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                    DateFormat df = new SimpleDateFormat("dd-M-yyyy", Locale.US);
                     String date = df.format(dateDay);
-                    //Log.i("debugTag", date);
+                    //Log.i("debugTag", "date jour : " +  date);
                     if(tabSoins.getJSONObject(j).getString("dateSoin").equals(date)) {
                         //Log.i("debugTag", "soin du 18-12-2015");
                         JSONObject n = tabSoins.getJSONObject(j).getJSONObject("infirmier");
                         //Log.i("debugTag", n.getString("nom"));
                         if (n.getInt("idinfirmier") == MyApplication.getIdInfirmiere().getId()) {
-                            //Log.i("debugTag",p.getNom());
+                            Log.i("debugTag",p.getNom());
                             listPatients.add(p);
                         }
                     }
@@ -172,6 +173,10 @@ public class Menu1Fragment extends Fragment {
                 });
                 ArrayAdapter<Patient> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, listPatients);
                 listTest.setAdapter(adapter);
+                progressDialog.dismiss();
+            }
+            else {
+                Log.i("debugTag", "liste vide");
                 progressDialog.dismiss();
             }
 

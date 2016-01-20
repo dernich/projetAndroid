@@ -101,7 +101,7 @@ public class InformationActivity extends AppCompatActivity {
                     //AllData allData = new AllData();
                     //allData.deletePatient(patient);
                     RequestQueue requestQueue =  Volley.newRequestQueue(this.getApplicationContext());
-                    StringRequest request = new StringRequest(Request.Method.DELETE, "http://apinurseagenda.azurewebsites.net/api/patients/" + patient.getId(), new Response.Listener<String>() {
+                    StringRequest request = new StringRequest(Request.Method.DELETE, "http://nurseapi.azurewebsites.net/api/patients/" + patient.getId(), new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Log.d("onResponse ", response);

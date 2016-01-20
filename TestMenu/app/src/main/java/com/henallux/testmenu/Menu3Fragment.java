@@ -163,7 +163,7 @@ public class Menu3Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int day = dateChoice.getDayOfMonth();
-                int month = dateChoice.getMonth();
+                int month = dateChoice.getMonth() + 1;
                 int year = dateChoice.getYear();
                 final Calendar calendar = Calendar.getInstance();
                 calendar.set(day, month, year);
